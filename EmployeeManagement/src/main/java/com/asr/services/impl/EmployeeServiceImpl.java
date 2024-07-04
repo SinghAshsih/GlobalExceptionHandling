@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.asr.custom.exception.EmployeeNotFoundException;
 import com.asr.dto.EmployeeDto;
 import com.asr.entity.Employee;
 import com.asr.mapper.EmployeeMapper;
@@ -28,7 +30,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public EmployeeDto getById(Long id) {
 		// TODO Auto-generated method stub
-		Employee employee = employeeRepository.findById(id).orElseThrow();
+		Employee employee = employeeRepository.findById(id)
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found for the given id = " + id));
 		return EmployeeMapper.mapToEmployeeDto(employee);
 	}
 
@@ -44,7 +47,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void deleteById(Long id) {
 		// TODO Auto-generated method stub
-		Employee employee = employeeRepository.findById(id).orElseThrow();
+		Employee employee = employeeRepository.findById(id)
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found for the given id = " + id));
 		employeeRepository.deleteById(id);
 
 	}
@@ -52,7 +56,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public EmployeeDto update(EmployeeDto employeeDto, Long id) {
 		// TODO Auto-generated method stub
-		Employee employee = employeeRepository.findById(id).orElseThrow();
+		Employee employee = employeeRepository.findById(id)
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found for the given id = " + id));
 		employee.setName(employeeDto.getName());
 		employee.setEmail(employeeDto.getEmail());
 		employee.setAge(employeeDto.getAge());

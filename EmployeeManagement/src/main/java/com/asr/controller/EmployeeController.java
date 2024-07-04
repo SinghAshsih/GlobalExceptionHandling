@@ -34,7 +34,7 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/get/{id}")
-	ResponseEntity<EmployeeDto> getById(@PathVariable Long id) {
+	ResponseEntity<?> getById(@PathVariable Long id) {
 		EmployeeDto employee = employeeSerive.getById(id);
 		return new ResponseEntity<EmployeeDto>(employee, HttpStatus.OK);
 	}
@@ -47,7 +47,6 @@ public class EmployeeController {
 
 	@PutMapping("/update/{id}")
 	ResponseEntity<EmployeeDto> update(@RequestBody EmployeeDto employeeDto,@PathVariable Long id) {
-		// EmployeeDto updateeEmployee = employeeSerive.getById(id);
 		EmployeeDto updateEmployee = employeeSerive.update(employeeDto,id);
 		return new ResponseEntity<EmployeeDto>(updateEmployee, HttpStatus.CREATED);
 	}
